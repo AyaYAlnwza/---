@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>เป็นแฟนกันนะ ❤️</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Itim&display=swap');
+
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Itim', cursive;
+            background-color: #ffe6e6;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            flex-direction: column;
+            text-align: center;
+        }
+
+        .container {
+            background: rgba(255, 255, 255, 0.8);
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            max-width: 90%;
+            width: 400px;
+            position: relative;
+            z-index: 10;
+        }
+
+        h1 {
+            color: #ff6b6b;
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+
+        p {
+            color: #555;
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+        }
+
+        .gif-container img {
+            width: 150px;
+            border-radius: 15px;
+            margin-bottom: 20px;
+        }
+
+        .btn-group {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+            position: relative; /* สำคัญสำหรับการอ้างอิงตำแหน่ง */
+            min-height: 60px; /* กันพื้นที่ยุบเวลาปุ่มหาย */
+        }
+
+        button {
+            padding: 15px 30px;
+            font-size: 1.2rem;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: transform 0.2s;
+            font-family: 'Itim', cursive;
+            z-index: 20;
+        }
+
+        .yes-btn {
+            background-color: #ff6b6b;
+            color: white;
+            box-shadow: 0 5px 15px rgba(255, 107, 107, 0.3);
+        }
+
+        .yes-btn:hover {
+            transform: scale(1.1);
+            background-color: #ff5252;
+        }
+
+        .no-btn {
+            background-color: #f1f1f1;
+            color: #333;
+            transition: 0.2s ease; /* เพิ่มความสมูทนิดนึงเวลาขยับ */
+        }
+
+        .heart {
+            position: absolute;
+            color: #ff6b6b;
+            animation: float 4s linear infinite;
+            opacity: 0;
+            z-index: 1;
+        }
+
+        @keyframes float {
+            0% { transform: translateY(100vh) scale(0.5); opacity: 1; }
+            100% { transform: translateY(-10vh) scale(1.5); opacity: 0; }
+        }
+
+        .success-message {
+            display: none;
+            flex-direction: column;
+            align-items: center;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="hearts-container"></div>
+
+    <div class="container" id="main-card">
+        <div class="gif-container">
+            <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExM3R6bXc4bThtb3I5Y3R6bXc4bThtb3I5Y3R6bXc4bSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9cw/cLS1cfxvGOPVpf9g3y/giphy.gif" alt="Cute Bear">
+        </div>
+        
+        <h1>เป็นแฟนกันนะ?</h1>
+        <p>เค้าชอบเธอมากๆ เลยนะ...<br>ตกลงเป็นแฟนกับกัสได้ไหม?</p>
+        
+        <div class="btn-group">
+            <button class="yes-btn" onclick="sayYes()">ตกลง! ❤️</button>
+            <button class="no-btn" id="noBtn" onclick="moveButton()">ไม่เอา</button>
+        </div>
+    </div>
+
+    <div class="container success-message" id="success-card">
+        <div class="gif-container">
+            <img src="https://media.giphy.com/media/T86i6yDyOYz7J6AkTG/giphy.gif" alt="Happy Cat">
+        </div>
+        <h1>เย้! ขอบคุณนะ ❤️</h1>
+        <p>รักเธอที่สุดในโลกเลยยยย!</p>
+    </div>
+
+    <script>
+        function sayYes() {
+            document.getElementById('main-card').style.display = 'none';
+            document.getElementById('success-card').style.display = 'flex';
+            createManyHearts();
+        }
+
+        function moveButton() {
+            const noBtn = document.getElementById('noBtn');
+            
+            // ทำให้ปุ่มกลายเป็น absolute เพื่อให้ขยับไปทั่วจอได้
+            noBtn.style.position = 'fixed'; 
+            
+            // คำนวณตำแหน่งใหม่แบบสุ่ม (ขอบเขตหน้าจอ)
+            const newX = Math.random() * (window.innerWidth - noBtn.offsetWidth);
+            const newY = Math.random() * (window.innerHeight - noBtn.offsetHeight);
+
+            noBtn.style.left = newX + 'px';
+            noBtn.style.top = newY + 'px';
+            
+            // เปลี่ยนข้อความกวนๆ
+            const phrases = ["ไม่ให้กด!", "รับรักเราเถอะ", "ไม่ให้!!", "กดปุ่มสีแดงดีกว่า", "น้าาา!"];
+            const randomPhrase = phrases[Math.floor(Math.random() * phrases.length)];
+            noBtn.innerText = randomPhrase;
+        }
+
+        function createHeart() {
+            const heart = document.createElement('div');
+            heart.classList.add('heart');
+            heart.innerText = '❤️';
+            heart.style.left = Math.random() * 100 + "vw";
+            heart.style.animationDuration = Math.random() * 2 + 3 + "s"; 
+            heart.style.fontSize = Math.random() * 20 + 10 + "px";
+            
+            document.getElementById('hearts-container').appendChild(heart);
+            setTimeout(() => { heart.remove(); }, 5000);
+        }
+
+        setInterval(createHeart, 300);
+
+        function createManyHearts() {
+            for(let i=0; i<50; i++) {
+                setTimeout(createHeart, i*50);
+            }
+        }
+    </script>
+</body>
+</html>
